@@ -22,7 +22,10 @@
 ;;;
   if %save_flag == 1 saveon
 *text_cw_loop
+;;;  gettab   ;textbtnwait‚Å TABƒL[‚ğE‚¤
+  getfunction ; Function E‚¤
   getpage  ;PageUp, PageDown‚ğE‚¤
+  btndown 1
   textbtnwait %ret
   if %ret == 0 goto *text_cw_next  ;left click
   if %ret == -1 gosub *text_cw_rclick  ;right click
@@ -30,6 +33,9 @@
   if %ret == -2 gosub *text_cw_pageup
   if %ret == 101 gosub *text_cw_pageup
   if %ret == 1001 gosub *noroi_loop
+;;;  if %ret == -20 gosub *text_cw_tab ;; checkkey‚ª‚È‚¢H‚Ì‚Å‰Ÿ‚µ‚Á‚Ï‚È‚µ‘Îô‚ª‚Å‚«‚È‚¢‚©‚ç
+  if %ret == -22 gosub *text_cw_f2
+  btndown 0
   goto *text_cw_loop
 *text_cw_next
   vsp SP_USAGI, 0
@@ -50,6 +56,18 @@
   if %adv_talkmode == 100 vsp SP_CLICK, 0 : vsp SP_CLICK_MINI, 1
   print 1
   return
+;;;
+*text_cw_f2
+  if %adv_rmode == 0 return
+  vsp SP_CLICK, 0
+  vsp SP_CLICK_MINI, 0
+  print 1
+  gosub *free_eval
+  vsp SP_CLICK, 1
+  if %adv_talkmode == 100 vsp SP_CLICK, 0 : vsp SP_CLICK_MINI, 1
+  print 1
+  return
+;;;
 *text_cw_rclick
   if %adv_rmode == 0 return
   vsp SP_CLICK, 0
